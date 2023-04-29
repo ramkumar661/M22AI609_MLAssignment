@@ -1,5 +1,3 @@
-
-
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
@@ -10,22 +8,14 @@ from matplotlib import pyplot as plt
 import os
 import cv2
 
-
-# In[42]:
-
-
 # Define the paths to your image folders
 train = 'train'
 val = 'val'
 
-
-# In[43]:
-
-
 # Set the path to the folder containing the 'train' folder
 data_dir = train
 # Set the image size
-img_size = (32, 32)
+img_size = (34, 34)
 # Create empty lists for the images and labels
 images = []
 labels = []
@@ -51,14 +41,10 @@ labels = np.array(labels)
 np.save('x_train.npy', images)
 np.save('y_train.npy', labels)
 
-
-# In[44]:
-
-
 # Set the path to the folder containing the 'val' folder
 data_dir_val = val
 # Set the image size
-img_size_val = (32, 32)
+img_size_val = (34, 34)
 # Create empty lists for the images and labels
 images_val = []
 labels_val = []
@@ -83,18 +69,11 @@ labels_val = np.array(labels_val)
 np.save('x_test.npy', images_val)
 np.save('y_test.npy', labels_val)
 
-
-# In[45]:
-
-
 # Load the dataset
 x_train = np.load('x_train.npy')
 y_train = np.load('y_train.npy')
 x_test = np.load('x_test.npy')
 y_test = np.load('y_test.npy')
-
-
-# In[46]:
 
 
 # test the images are loaded correctly
@@ -103,13 +82,10 @@ print(len(x_test))
 x_train[0].shape
 x_train[0]
 plt.matshow(x_train[0])
-plt.matshow(x_train[999])
+plt.matshow(x_train[500])
 print(x_train.shape)
 print(x_test.shape)
 y_train
-
-
-# In[47]:
 
 
 # flatten the dataset i.e, change 2D to 1D
@@ -118,10 +94,6 @@ x_test = x_test.reshape(len(x_test),32*32)
 print(x_rail_flat.shape)
 print(x_test.shape)
 x_rail_flat[0]
-
-
-# In[48]:
-
 
 # creating a simple nn
 # create a dense layer where every input is connected to every other output, the number of inputs are 1000, outputs are 10
@@ -137,9 +109,6 @@ model.compile(optimizer='adam',
 # train the model
 # 5 iterations done here
 model.fit(x_rail_flat, y_train,epochs= 5)
-
-
-# In[49]:
 
 
 # creating a simple nn
@@ -158,14 +127,7 @@ model.compile(optimizer='adam',
 # some 10 iterations done here
 model.fit(x_train, y_train,epochs= 10, validation_data=(x_test, y_test))
 
-
-# In[50]:
-
-
 # Observation : we see a better accuracy from the 2nd iteration
-
-
-# In[51]:
 
 
 # now scale and try to check the accuracy, divide dataset by 255
@@ -174,27 +136,14 @@ x_test_scaled = x_test/255
 model.fit(x_train_t, y_train,epochs= 10, validation_data=(x_test_scaled, y_test))
 
 
-# In[52]:
-
-
 # Observation : we got better result for all iterations on scaling the training dataset
-
-
-# In[53]:
 
 
 # evaluate test dataset
 model.evaluate(x_test_scaled,y_test)
 
-
-# In[54]:
-
-
 # here we can see there are some errors
 # we need to modify our nn, we add some layers in the above model and different activation function
-
-
-# In[55]:
 
 
 # in 1st Dense layer,the input is 32 x 32 = 1024 neurons, which will give 10 output(numbers from 0 to 9)
@@ -215,16 +164,10 @@ model2.compile(optimizer='adam',
 history = model2.fit(x_train_t, y_train,epochs= 10, validation_data=(x_test_scaled, y_test))
 
 
-# In[56]:
-
-
 # Observation : due to multiple layers the compiling will take more time to execute
 # we also got amazing accuracy than earlier
 # evaluate test dataset on modified model
 model2.evaluate(x_test_scaled,y_test)
-
-
-# In[57]:
 
 
 # Earlier we got 0.9213483333587646 now we got 0.9606741666793823 accuracy
@@ -237,9 +180,6 @@ y_predicted_labels=[np.argmax(i) for i in y_predicted]
 print(y_predicted_labels, len(y_predicted_labels))
 conf_mat = tf.math.confusion_matrix(labels=y_test, predictions=y_predicted_labels)
 conf_mat
-
-
-# In[58]:
 
 
 plt.figure(figsize = (10,10))
