@@ -170,9 +170,7 @@ history = model2.fit(x_train_t, y_train,epochs= 10, validation_data=(x_test_scal
 model2.evaluate(x_test_scaled,y_test)
 
 
-# Earlier we got 0.9213483333587646 now we got 0.9606741666793823 accuracy
-# redo the confusion matrix
-# build confusion matrix to see how our prediction looks like
+
 # convert to concrete values
 y_predicted = model2.predict(x_test_scaled)
 y_predicted[0]
