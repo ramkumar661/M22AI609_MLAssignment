@@ -15,7 +15,7 @@ val = 'val'
 # Set the path to the folder containing the 'train' folder
 data_dir = train
 # Set the image size
-img_size = (34, 34)
+img_size = (32, 32)
 # Create empty lists for the images and labels
 images = []
 labels = []
