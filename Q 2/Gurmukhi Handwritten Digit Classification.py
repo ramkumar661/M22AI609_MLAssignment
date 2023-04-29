@@ -44,7 +44,7 @@ np.save('y_train.npy', labels)
 # Set the path to the folder containing the 'val' folder
 data_dir_val = val
 # Set the image size
-img_size_val = (34, 34)
+img_size_val = (32, 32)
 # Create empty lists for the images and labels
 images_val = []
 labels_val = []
@@ -110,7 +110,6 @@ model.compile(optimizer='adam',
 # 5 iterations done here
 model.fit(x_rail_flat, y_train,epochs= 5)
 
-
 # creating a simple nn
 # create a dense layer where every input is connected to every other output, the number of inputs are 1000, outputs are 10
 # activation function is sigmoid
@@ -127,17 +126,10 @@ model.compile(optimizer='adam',
 # some 10 iterations done here
 model.fit(x_train, y_train,epochs= 10, validation_data=(x_test, y_test))
 
-# Observation : we see a better accuracy from the 2nd iteration
-
-
 # now scale and try to check the accuracy, divide dataset by 255
 x_train_t = x_train/255
 x_test_scaled = x_test/255
 model.fit(x_train_t, y_train,epochs= 10, validation_data=(x_test_scaled, y_test))
-
-
-# Observation : we got better result for all iterations on scaling the training dataset
-
 
 # evaluate test dataset
 model.evaluate(x_test_scaled,y_test)
@@ -163,7 +155,6 @@ model2.compile(optimizer='adam',
 # some 10 iterations done here
 history = model2.fit(x_train_t, y_train,epochs= 10, validation_data=(x_test_scaled, y_test))
 
-
 # Observation : due to multiple layers the compiling will take more time to execute
 # we also got amazing accuracy than earlier
 # evaluate test dataset on modified model
@@ -179,15 +170,10 @@ print(y_predicted_labels, len(y_predicted_labels))
 conf_mat = tf.math.confusion_matrix(labels=y_test, predictions=y_predicted_labels)
 conf_mat
 
-
 plt.figure(figsize = (10,10))
 sn.heatmap(conf_mat,annot=True,fmt='d')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
-
-
-# In[59]:
-
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(x_test, y_test)
